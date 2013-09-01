@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BUILD_TYPE=${1:-all}
+
+if [[ $BUILD_TYPE = 'all' || $BUILD_TYPE = 'base' ]]; then
+
+    # neuter upstart
+    dpkg-divert --local --rename --add /sbin/initctl
+    ln -s /bin/true /sbin/initctl
+
+    apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+    echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' > /etc/apt/sources.list.d/10gen.list
+
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install mongodb-10gen -y
+
+    mkdir -p /data/db
+fi
