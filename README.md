@@ -1,1 +1,1 @@
-A servicepack for MongoDB.
+A [servicepack](https://github.com/pocketpaas/servicepack) for MongoDB.
